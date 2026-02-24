@@ -1,0 +1,1001 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Gourmet Hub | Premium Food Ordering</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet">
+  <style>
+    :root {
+      --primary: #6366f1;
+      --primary-light: #818cf8;
+      --primary-dark: #4f46e5;
+      --secondary: #0ea5e9;
+      --accent: #f43f5e;
+      --success: #10b981;
+      --bg-body: #0f172a;
+      --bg-card: #1e293b;
+      --bg-input: #334155;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --glass: rgba(255, 255, 255, 0.03);
+      --glass-border: rgba(255, 255, 255, 0.08);
+      --radius-xl: 24px;
+      --radius-lg: 16px;
+      --radius-md: 12px;
+      --shadow-xl: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+      --font-display: 'Outfit', sans-serif;
+      --font-body: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    body {
+      margin: 0;
+      background: var(--bg-body);
+      color: var(--text-main);
+      font-family: var(--font-body);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      background-image:
+        radial-gradient(circle at 0% 0%, rgba(99, 102, 241, 0.15) 0%, transparent 50%),
+        radial-gradient(circle at 100% 100%, rgba(14, 165, 233, 0.1) 0%, transparent 50%);
+      background-attachment: fixed;
+      overflow-x: hidden;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 40px 20px;
+      width: 100%;
+      display: grid;
+      grid-template-columns: 1fr 380px;
+      gap: 32px;
+      flex: 1;
+    }
+
+    header {
+      grid-column: 1 / -1;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      padding: 20px;
+      background: var(--glass);
+      backdrop-filter: blur(12px);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--radius-xl);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .logo-box {
+      width: 52px;
+      height: 52px;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: 24px;
+      box-shadow: 0 8px 20px rgba(99, 102, 241, 0.3);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .logo-box::after {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+      transform: rotate(45deg);
+      animation: shine 3s infinite;
+    }
+
+    @keyframes shine {
+      0% {
+        left: -100%;
+      }
+
+      100% {
+        left: 100%;
+      }
+    }
+
+    h1 {
+      margin: 0;
+      font-family: var(--font-display);
+      font-size: 24px;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      background: linear-gradient(to right, #fff, #94a3b8);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .user-status {
+      padding: 8px 16px;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 20px;
+      font-size: 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      border: 1px solid var(--glass-border);
+    }
+
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      background: var(--success);
+      border-radius: 50%;
+      box-shadow: 0 0 10px var(--success);
+    }
+
+    /* Menu Section */
+    .main-content {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .card {
+      background: var(--bg-card);
+      border-radius: var(--radius-xl);
+      padding: 28px;
+      border: 1px solid var(--glass-border);
+      box-shadow: var(--shadow-xl);
+      position: relative;
+    }
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 28px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--glass-border);
+    }
+
+    .section-title h2 {
+      margin: 0;
+      font-family: var(--font-display);
+      font-size: 20px;
+    }
+
+    .section-title p {
+      margin: 4px 0 0;
+      color: var(--text-muted);
+      font-size: 13px;
+    }
+
+    .menu-grid {
+      display: grid;
+      gap: 16px;
+    }
+
+    .food-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--radius-lg);
+      transition: all 0.3s ease;
+    }
+
+    .food-item:hover {
+      background: rgba(255, 255, 255, 0.04);
+      transform: translateY(-2px);
+      border-color: var(--primary-light);
+    }
+
+    .food-info {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex: 1;
+    }
+
+    .food-img {
+      width: 56px;
+      height: 56px;
+      border-radius: 12px;
+      background-size: cover;
+      background-position: center;
+      border: 1px solid var(--glass-border);
+    }
+
+    .food-details h3 {
+      margin: 0;
+      font-size: 16px;
+      font-weight: 600;
+    }
+
+    .food-details .tag {
+      font-size: 11px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .order-controls {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .price-tag {
+      font-family: var(--font-display);
+      font-weight: 700;
+      color: var(--primary-light);
+      font-size: 16px;
+      min-width: 80px;
+      text-align: right;
+    }
+
+    .qty-input-group {
+      display: flex;
+      align-items: center;
+      background: var(--bg-input);
+      border-radius: 10px;
+      padding: 4px;
+      border: 1px solid var(--glass-border);
+    }
+
+    .qty-btn {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      border: none;
+      background: transparent;
+      color: white;
+      font-size: 18px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .qty-btn:hover {
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .qty-val {
+      width: 36px;
+      text-align: center;
+      font-weight: 700;
+      font-size: 14px;
+      border: none;
+      background: transparent;
+      color: white;
+      outline: none;
+    }
+
+    .item-total {
+      min-width: 90px;
+      text-align: right;
+      font-weight: 700;
+      font-size: 15px;
+      padding: 6px 12px;
+      background: rgba(99, 102, 241, 0.1);
+      border-radius: 8px;
+      color: var(--primary-light);
+    }
+
+    /* Buttons */
+    .btn {
+      padding: 12px 24px;
+      border-radius: var(--radius-md);
+      border: none;
+      font-weight: 600;
+      font-family: var(--font-body);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      font-size: 14px;
+      transition: all 0.2s;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: white;
+      box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
+    }
+
+    .btn-primary:hover {
+      background: var(--primary-dark);
+      transform: translateY(-1px);
+      box-shadow: 0 6px 20px rgba(99, 102, 241, 0.4);
+    }
+
+    .btn-ghost {
+      background: transparent;
+      color: var(--text-main);
+      border: 1px solid var(--glass-border);
+    }
+
+    .btn-ghost:hover {
+      background: rgba(255, 255, 255, 0.05);
+      border-color: var(--text-muted);
+    }
+
+    .btn-danger {
+      background: rgba(244, 63, 94, 0.1);
+      color: var(--accent);
+      border: 1px solid rgba(244, 63, 94, 0.2);
+    }
+
+    .btn-danger:hover {
+      background: var(--accent);
+      color: white;
+    }
+
+    /* Summary Area */
+    .summary-container {
+      margin-top: 24px;
+      display: grid;
+      grid-template-columns: 1fr 240px;
+      gap: 24px;
+    }
+
+    .order-summary-box {
+      background: rgba(0, 0, 0, 0.2);
+      border-radius: var(--radius-lg);
+      padding: 20px;
+      min-height: 120px;
+    }
+
+    .summary-item {
+      display: flex;
+      justify-content: space-between;
+      padding: 8px 0;
+      border-bottom: 1px dashed var(--glass-border);
+      font-size: 14px;
+    }
+
+    .summary-total {
+      margin-top: 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-weight: 800;
+      font-size: 20px;
+      color: var(--primary-light);
+    }
+
+    .bank-card {
+      background: linear-gradient(135deg, #1e293b, #0f172a);
+      border-radius: var(--radius-lg);
+      padding: 20px;
+      border: 1px solid var(--glass-border);
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .bank-label {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--text-muted);
+    }
+
+    .bank-acc {
+      font-family: 'Courier New', monospace;
+      font-size: 16px;
+      letter-spacing: 1px;
+      color: var(--primary-light);
+      background: rgba(255, 255, 255, 0.03);
+      padding: 8px;
+      border-radius: 6px;
+      cursor: pointer;
+      text-align: center;
+    }
+
+    /* Sidebar & Admin */
+    .sidebar {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .admin-login {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .input-dark {
+      background: var(--bg-input);
+      border: 1px solid var(--glass-border);
+      border-radius: 10px;
+      padding: 12px 16px;
+      color: white;
+      font-family: var(--font-body);
+      outline: none;
+    }
+
+    .input-dark:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1);
+    }
+
+    .admin-panel {
+      display: none;
+      flex-direction: column;
+      gap: 20px;
+      animation: slideIn 0.3s ease-out;
+    }
+
+    @keyframes slideIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .stat-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .stat-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--glass-border);
+      padding: 16px;
+      border-radius: var(--radius-md);
+      text-align: center;
+    }
+
+    .stat-val {
+      font-size: 20px;
+      font-weight: 800;
+      display: block;
+      margin-top: 4px;
+    }
+
+    .stat-label {
+      font-size: 11px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+    }
+
+    .order-scroll {
+      max-height: 400px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      padding-right: 8px;
+    }
+
+    .order-scroll::-webkit-scrollbar {
+      width: 4px;
+    }
+
+    .order-scroll::-webkit-scrollbar-thumb {
+      background: var(--glass-border);
+      border-radius: 2px;
+    }
+
+    .order-entry {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--radius-md);
+      padding: 12px;
+      font-size: 13px;
+    }
+
+    /* Modal */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.8);
+      backdrop-filter: blur(8px);
+      z-index: 1000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .modal-overlay.active {
+      display: flex;
+      opacity: 1;
+    }
+
+    .modal-content {
+      background: var(--bg-card);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--radius-xl);
+      padding: 40px;
+      width: 440px;
+      max-width: 90%;
+      text-align: center;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8);
+    }
+
+    .modal-icon {
+      width: 80px;
+      height: 80px;
+      background: rgba(99, 102, 241, 0.1);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 24px;
+      color: var(--primary);
+      font-size: 32px;
+    }
+
+    footer {
+      margin-top: auto;
+      padding: 40px;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 13px;
+      border-top: 1px solid var(--glass-border);
+    }
+
+    @media (max-width: 1000px) {
+      .container {
+        grid-template-columns: 1fr;
+      }
+
+      .sidebar {
+        order: -1;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <header>
+      <div class="brand">
+        <div class="logo-box">GH</div>
+        <div>
+          <h1>Gourmet Hub</h1>
+          <p style="color:var(--text-muted); font-size:12px; margin:2px 0 0">Exquisite Ordering Experience</p>
+        </div>
+      </div>
+      <div class="user-status" id="userBadge">
+        <div class="status-dot"></div>
+        <span id="displayUserName">Guest Client</span>
+      </div>
+    </header>
+
+    <main class="main-content">
+      <section class="card">
+        <div class="section-header">
+          <div class="section-title">
+            <h2>Signature Menu</h2>
+            <p>Select your delicacies and specify desired quantity</p>
+          </div>
+          <div class="tag" style="font-size:12px; font-weight:700; color:var(--text-muted)">BIRR / UNIT</div>
+        </div>
+
+        <div class="menu-grid" id="menuGrid">
+          <!-- Items injected by JS -->
+        </div>
+
+        <div class="summary-container">
+          <div class="order-summary-box">
+            <div id="summaryList">
+              <p style="color:var(--text-muted); text-align:center; margin-top:30px">Your order table is empty</p>
+            </div>
+            <div class="summary-total">
+              <span>Grand Total</span>
+              <span><span id="grandTotal">0</span> <small style="font-size:12px">ETB</small></span>
+            </div>
+          </div>
+
+          <div class="bank-card">
+            <span class="bank-label">Direct Payment</span>
+            <div class="bank-acc" id="bankAcc" onclick="copyAcc()">1000 2000 3000 4000</div>
+            <div class="bank-label">Account Holder</div>
+            <div style="font-weight:600; font-size:14px">Ruhama Kassahun</div>
+            <button class="btn btn-primary" onclick="placeOrder()" style="margin-top:10px; width:100%">
+              Submit Order
+            </button>
+            <button class="btn btn-ghost" onclick="shareToWhatsApp()"
+              style="margin-top:8px; width:100%; border-color: #25D366; color: #25D366;">
+              Share via WhatsApp
+            </button>
+          </div>
+        </div>
+
+        <div style="margin-top:20px; display:flex; gap:12px">
+          <button class="btn btn-ghost" onclick="resetForm()">Clear All</button>
+          <span style="margin-left:auto; color:var(--text-muted); font-size:12px; align-self:center">
+            Secure SSL Protection active
+          </span>
+        </div>
+      </section>
+    </main>
+
+    <aside class="sidebar">
+      <div class="card">
+        <div id="loginSection" class="admin-login">
+          <div class="section-title">
+            <h2>Admin Gateway</h2>
+            <p>Access management controls</p>
+          </div>
+          <input type="password" id="adminPass" class="input-dark" placeholder="Security Key">
+          <button class="btn btn-primary" onclick="loginAdmin()" style="width:100%">Authenticate</button>
+        </div>
+
+        <div id="adminPanel" class="admin-panel">
+          <div class="section-header" style="margin-bottom:16px">
+            <div class="section-title">
+              <h2>Dashboard</h2>
+              <p>Live metrics & analytics</p>
+            </div>
+            <button class="btn btn-ghost" onclick="logoutAdmin()" style="padding:6px 12px">Exit</button>
+          </div>
+
+          <div class="stat-grid">
+            <div class="stat-card">
+              <span class="stat-label">Revenue</span>
+              <span class="stat-val" id="adminRevenue">0</span>
+            </div>
+            <div class="stat-card">
+              <span class="stat-label">Volume</span>
+              <span class="stat-val" id="adminVolume">0</span>
+            </div>
+          </div>
+
+          <div style="margin-top:10px">
+            <div class="section-title" style="margin-bottom:12px">
+              <h3 style="font-size:14px; margin:0">Live Orders</h3>
+            </div>
+            <div class="order-scroll" id="orderFeed">
+              <!-- Orders injected here -->
+            </div>
+          </div>
+
+          <button class="btn btn-danger" onclick="clearLiveOrders()" style="width:100%; margin-top:20px">
+            Purge All Data
+          </button>
+        </div>
+      </div>
+
+      <div class="card" style="text-align:center">
+        <h3 style="margin:0 0 10px; font-size:14px">Active Session</h3>
+        <p style="font-size:12px; color:var(--text-muted); line-height:1.6">
+          Changes to your identity will be reflected in next order. Current: <strong id="sessionName">Guest</strong>
+        </p>
+        <button class="btn btn-ghost" onclick="promptName()" style="width:100%; font-size:12px; margin-top:12px">
+          Change Identity
+        </button>
+        <button class="btn btn-primary" onclick="generateShareableLink()"
+          style="width:100%; font-size:12px; margin-top:12px; background: var(--secondary)">
+          Share App Link
+        </button>
+      </div>
+  </div>
+  </aside>
+
+  <footer>
+    <div style="margin-bottom:12px">
+      <span class="logo-box"
+        style="width:32px; height:32px; font-size:14px; display:inline-flex; margin-right:8px">GH</span>
+      <span style="font-family:var(--font-display); font-weight:700">GOURMET HUB</span>
+    </div>
+    &copy; 2026 Crafted with precision for Fellowship Students.
+  </footer>
+  </div>
+
+  <!-- Welcome Modal -->
+  <div class="modal-overlay" id="nameModal">
+    <div class="modal-content">
+      <div class="modal-icon">👤</div>
+      <h2 style="font-family:var(--font-display); margin:0 0 10px">Welcome, Diner</h2>
+      <p style="color:var(--text-muted); font-size:15px; margin-bottom:30px">
+        How should we address you today? This name will be attached to your orders.
+      </p>
+      <input type="text" id="userNameInput" class="input-dark" placeholder="Your Name"
+        style="width:100%; margin-bottom:20px; text-align:center; font-size:18px">
+      <div style="display:flex; gap:12px">
+        <button class="btn btn-ghost" onclick="closeModal('Guest')" style="flex:1">Incognito</button>
+        <button class="btn btn-primary" onclick="submitName()" style="flex:2">Continue</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const menuItems = [
+      { id: 'rice', name: 'Premium Rice', tag: 'Main Course', price: 50, color: '#6366f1' },
+      { id: 'pasta', name: 'Classic Pasta', tag: 'Italian Style', price: 60, color: '#f59e0b' },
+      { id: 'injera', name: 'Injera w/ Shiro', tag: 'Traditional', price: 40, color: '#10b981' },
+      { id: 'burger', name: 'Beef Burger', tag: 'Chef Choice', price: 80, color: '#f43f5e' }
+    ];
+
+    let state = {
+      order: {},
+      currentUser: localStorage.getItem('gh_name') || null,
+      isAdmin: false
+    };
+
+    // Initialize Application
+    function init() {
+      renderMenu();
+      if (!state.currentUser) {
+        openModal();
+      } else {
+        updateUserDisplay();
+      }
+      refreshAdminData();
+    }
+
+    function renderMenu() {
+      const grid = document.getElementById('menuGrid');
+      grid.innerHTML = menuItems.map(item => `
+                <div class="food-item">
+                    <div class="food-info">
+                        <div class="food-img" style="background: linear-gradient(135deg, ${item.color}22, ${item.color}44); display:flex; align-items:center; justify-content:center; color:${item.color}; font-weight:800; font-size:24px;">
+                            ${item.name[0]}
+                        </div>
+                        <div class="food-details">
+                            <span class="tag">${item.tag}</span>
+                            <h3>${item.name}</h3>
+                        </div>
+                    </div>
+                    <div class="order-controls">
+                        <div class="price-tag">${item.price} ETB</div>
+                        <div class="qty-input-group">
+                            <button class="qty-btn" onclick="updateQty('${item.id}', -1)">−</button>
+                            <input type="text" class="qty-val" id="qty-${item.id}" value="0" readonly>
+                            <button class="qty-btn" onclick="updateQty('${item.id}', 1)">+</button>
+                        </div>
+                        <div class="item-total" id="total-${item.id}">0 <small>ETB</small></div>
+                    </div>
+                </div>
+            `).join('');
+    }
+
+    function updateQty(id, delta) {
+      const current = state.order[id] || 0;
+      const next = Math.max(0, current + delta);
+      state.order[id] = next;
+
+      document.getElementById(`qty-${id}`).value = next;
+      const item = menuItems.find(i => i.id === id);
+      document.getElementById(`total-${id}`).innerHTML = `${next * item.price} <small>ETB</small>`;
+
+      updateSummary();
+    }
+
+    function updateSummary() {
+      const list = document.getElementById('summaryList');
+      let grandTotal = 0;
+      let itemsHtml = '';
+
+      menuItems.forEach(item => {
+        const qty = state.order[item.id] || 0;
+        if (qty > 0) {
+          const sub = qty * item.price;
+          grandTotal += sub;
+          itemsHtml += `
+                        <div class="summary-item">
+                            <span>${item.name} <small>x${qty}</small></span>
+                            <span style="font-weight:700">${sub} ETB</span>
+                        </div>
+                    `;
+        }
+      });
+
+      list.innerHTML = itemsHtml || '<p style="color:var(--text-muted); text-align:center; margin-top:30px">Your order table is empty</p>';
+      document.getElementById('grandTotal').textContent = grandTotal;
+    }
+
+    async function placeOrder() {
+      const total = parseInt(document.getElementById('grandTotal').textContent);
+      if (total === 0) {
+        alert('Please select some delicacies first.');
+        return;
+      }
+
+      const activeOrder = {
+        user: state.currentUser || 'Guest',
+        items: { ...state.order },
+        total: total,
+        timestamp: new Date().toISOString()
+      };
+
+      // 1. Save locally for history
+      const history = JSON.parse(localStorage.getItem('gh_orders') || '[]');
+      history.push(activeOrder);
+      localStorage.setItem('gh_orders', JSON.stringify(history));
+
+      // 2. Sync with Server API (if running)
+      try {
+        const response = await fetch('/api/orders', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(activeOrder)
+        });
+
+        if (response.ok) {
+          alert('Order synced with kitchen successfully!');
+        }
+      } catch (err) {
+        console.warn('Server offline, saved locally only.');
+      }
+
+      alert('Order placed! Use "Share via WhatsApp" to notify the merchant.');
+      resetForm();
+      refreshAdminData();
+    }
+
+    function shareToWhatsApp() {
+      const total = parseInt(document.getElementById('grandTotal').textContent);
+      if (total === 0) return alert('Select items first!');
+
+      let message = `*GH Order Request*\n`;
+      message += `------------------\n`;
+      message += `Customer: ${state.currentUser || 'Guest'}\n\n`;
+
+      menuItems.forEach(item => {
+        const qty = state.order[item.id] || 0;
+        if (qty > 0) {
+          message += `• ${item.name} x${qty} (${qty * item.price} ETB)\n`;
+        }
+      });
+
+      message += `\n*Total: ${total} ETB*\n`;
+      message += `------------------\n`;
+      message += `_Sent via Gourmet Hub App_`;
+
+      const encoded = encodeURIComponent(message);
+      window.open(`https://wa.me/?text=${encoded}`, '_blank');
+    }
+
+    function generateShareableLink() {
+      const url = window.location.origin + window.location.pathname;
+      navigator.clipboard.writeText(url);
+      alert('Application link copied to clipboard! Send this to your friends.');
+    }
+
+    function resetForm() {
+      state.order = {};
+      menuItems.forEach(item => {
+        document.getElementById(`qty-${item.id}`).value = 0;
+        document.getElementById(`total-${item.id}`).innerHTML = `0 <small>ETB</small>`;
+      });
+      updateSummary();
+    }
+
+    // Admin Logics
+    function loginAdmin() {
+      const pass = document.getElementById('adminPass').value;
+      if (pass === 'g0d i5 g00d') {
+        document.getElementById('loginSection').style.display = 'none';
+        document.getElementById('adminPanel').style.display = 'flex';
+        state.isAdmin = true;
+        refreshAdminData();
+      } else {
+        alert('Authentication failed. Access denied.');
+      }
+    }
+
+    function logoutAdmin() {
+      document.getElementById('loginSection').style.display = 'flex';
+      document.getElementById('adminPanel').style.display = 'none';
+      state.isAdmin = false;
+    }
+
+    function refreshAdminData() {
+      const orders = JSON.parse(localStorage.getItem('gh_orders') || '[]');
+      const revenue = orders.reduce((sum, o) => sum + o.total, 0);
+
+      document.getElementById('adminRevenue').textContent = revenue;
+      document.getElementById('adminVolume').textContent = orders.length;
+
+      const feed = document.getElementById('orderFeed');
+      feed.innerHTML = orders.slice().reverse().map(o => `
+                <div class="order-entry">
+                    <div style="display:flex; justify-content:space-between; margin-bottom:4px">
+                        <strong>${o.user}</strong>
+                        <span style="color:var(--primary-light)">${o.total} ETB</span>
+                    </div>
+                    <div style="font-size:11px; color:var(--text-muted)">
+                        ${new Date(o.timestamp).toLocaleTimeString()} • ${formatOrderString(o.items)}
+                    </div>
+                </div>
+            `).join('') || '<div style="text-align:center; padding:20px; color:var(--text-muted)">No data found</div>';
+    }
+
+    function formatOrderString(items) {
+      return Object.entries(items)
+        .filter(([_, qty]) => qty > 0)
+        .map(([id, qty]) => `${menuItems.find(m => m.id === id).name} (x${qty})`)
+        .join(', ');
+    }
+
+    function clearLiveOrders() {
+      if (confirm('Permanently wipe all transaction data from history?')) {
+        localStorage.setItem('gh_orders', '[]');
+        refreshAdminData();
+      }
+    }
+
+    // User Management
+    function openModal() {
+      const modal = document.getElementById('nameModal');
+      modal.style.display = 'flex';
+      setTimeout(() => modal.classList.add('active'), 10);
+    }
+
+    function closeModal(name) {
+      state.currentUser = name;
+      localStorage.setItem('gh_name', name);
+      updateUserDisplay();
+      const modal = document.getElementById('nameModal');
+      modal.classList.remove('active');
+      setTimeout(() => modal.style.display = 'none', 300);
+    }
+
+    function submitName() {
+      const name = document.getElementById('userNameInput').value.trim();
+      closeModal(name || 'Guest');
+    }
+
+    function promptName() {
+      document.getElementById('userNameInput').value = state.currentUser === 'Guest' ? '' : state.currentUser;
+      openModal();
+    }
+
+    function updateUserDisplay() {
+      document.getElementById('displayUserName').textContent = state.currentUser;
+      document.getElementById('sessionName').textContent = state.currentUser;
+    }
+
+    function copyAcc() {
+      navigator.clipboard.writeText('1000200030004000');
+      const el = document.getElementById('bankAcc');
+      const old = el.textContent;
+      el.textContent = 'COPIED TO CLIPBOARD';
+      el.style.color = 'var(--success)';
+      setTimeout(() => {
+        el.textContent = old;
+        el.style.color = 'var(--primary-light)';
+      }, 2000);
+    }
+
+    init();
+  </script>
+</body>
+
+</html>
